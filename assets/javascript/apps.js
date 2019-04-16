@@ -1,22 +1,10 @@
-var game = {
-    correct: 0,
-    incorrect: 0,
-    counter: 60,
-    countdown: function(){
-        game.counter--;
-        $("#counter").html(game.counter);
-        if (game.counter<=0){
-            console.log("Shot Clock Violation");
-            game.done();
-        }
-    }
-}
-$("#tipOffBtn").on("click", function (){
+$("#btnContainer").on("click", function (){
     game.start();
 })
-$(document).on("click", "#", function () {
+$(document).on("click", "#button", function () {
     game.done();
 })
+
 var questions = [{
     question: "What team does Lebron James play for?",  
     answers: ["Cavs ", "Knicks ", "Magic ", "Lakers "],
@@ -42,9 +30,9 @@ var questions = [{
     answers: ["Lakers ", "Knicks", "Kings ", "Nuggets "],
     correctAnswer: " Nuggets "
     }, {
-    question: "How many teams play in NewYork?", 
+    question: "How many teams play in California?", 
     answers: ["1 ", "2 ", "3", "4 "],
-    correctAnswer: " 2"
+    correctAnswer: " 4"
     }, {
     question: "How many Championchips does Lebron James have?", 
     answers: ["1", "3 ", "5 ", "6 "],
@@ -53,3 +41,25 @@ var questions = [{
    
     }
     ];
+    var game = {
+        correct: 0,
+        incorrect: 0,
+        counter: 60,
+        countdown: function(){
+            game.counter--;
+            $("#counter").html(game.counter);
+            if (game.counter<=0){
+                console.log("Shot Clock Violation");
+                game.done();
+            }
+        }
+    }
+     start:function () {
+        timer = setInterval(play.countdown, 1000);
+        $("#subWrapper").prepend("<h2>Time Remaining: <span id='counter'>60</span> Seconds</h2>"); 
+        $("#startButton").remove();
+        for (var i=0; i < questions.length; i++) {
+        $("#subWrapper").append("<h2>"+questions[i].question+"</h2>");
+        for (var j=0; j < questions[i].answers.length; j++) {
+        $("#subWrapper").append("<input type='radio' name='question-"+i+"' value='+questions[i].answers[j]+'>"+questions[i].answers[j]);
+        }
